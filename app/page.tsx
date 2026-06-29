@@ -318,7 +318,7 @@ export default function HomePage() {
       >
         <Dialog.Portal>
           <Dialog.Backdrop className="dialog-backdrop fixed inset-0 z-40" />
-          <Dialog.Popup className="dialog-popup fixed inset-x-3 top-1/2 z-50 mx-auto max-w-6xl -translate-y-1/2 rounded-[1.75rem] border border-white/85 bg-white/92 p-3 shadow-[0_38px_140px_rgba(45,56,107,0.34)] backdrop-blur-xl sm:p-4">
+          <Dialog.Popup className="dialog-popup fixed inset-x-3 top-3 bottom-3 z-50 mx-auto max-w-6xl overflow-y-auto overscroll-contain rounded-[1.75rem] border border-white/85 bg-white/92 p-3 shadow-[0_38px_140px_rgba(45,56,107,0.34)] backdrop-blur-xl sm:top-4 sm:bottom-4 sm:p-4">
             {lightboxArtwork && lightboxState ? (
               <Lightbox
                 artwork={lightboxArtwork}
@@ -596,7 +596,7 @@ function CollectionIcon({ index }: { index: number }) {
   return (
     <div
       className={cn(
-        'relative z-10 mt-12 ml-6 text-[#4b5d9c]/68',
+        'relative z-10 mt-20 mb-8 ml-6 text-[#4b5d9c]/68',
         collectionIconClassName(index),
       )}
     >
@@ -832,7 +832,7 @@ function FooterPanel() {
           Let's connect & explore creative possibilities together.
         </p>
       </div>
-      <div className="mt-5 grid max-w-full grid-cols-7 gap-1.5 pb-1 sm:mt-0 sm:flex sm:flex-nowrap sm:gap-2 sm:justify-end sm:pb-0">
+      <div className="mt-5 grid max-w-full grid-cols-7 justify-items-center gap-1.5 pb-1 sm:mt-0 sm:gap-2 lg:flex lg:flex-wrap lg:justify-end lg:pb-0">
         {creatorSocialLinks.map((item) => (
           <FooterLink key={item.label} item={item} />
         ))}
@@ -891,7 +891,7 @@ function collectionIconClassName(index: number) {
     'rotate-[-18deg] translate-y-1',
     'rotate-[10deg] -translate-x-2',
     'rotate-[-8deg] translate-y-2',
-    'rotate-[18deg] translate-x-1 translate-y-8',
+    'rotate-[18deg] translate-x-1',
     'rotate-[-2deg] translate-y-2',
     'rotate-[5deg] -translate-x-1',
     'rotate-[-15deg] translate-x-2',
