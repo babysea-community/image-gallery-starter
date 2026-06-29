@@ -33,10 +33,10 @@ AI image gallery for generative media artworks.
 
 <strong>Built with</strong>
 
-[![Next.js](https://img.shields.io/badge/next_js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
-[![React](https://img.shields.io/badge/react-53C1DE?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
-[![Base UI](https://img.shields.io/badge/base_ui-111827?style=for-the-badge&logo=react&logoColor=white)](https://base-ui.com)
-[![Cloudflare Images](https://img.shields.io/badge/cloudflare_images-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/images)
+[![Next.js](https://custom-icon-badges.demolab.com/badge/next_js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![React](https://custom-icon-badges.demolab.com/badge/react-53C1DE?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
+[![Base UI](https://custom-icon-badges.demolab.com/badge/base_ui-111827?style=for-the-badge&logo=baseui&logoColor=white)](https://base-ui.com)
+[![Cloudflare Images](https://custom-icon-badges.demolab.com/badge/cloudflare_images-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/images)
 
 <br />
 
