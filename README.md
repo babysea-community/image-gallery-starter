@@ -4,7 +4,7 @@
 
 # Image Gallery Starter
 
-AI image gallery for generative media artworks.
+Image gallery for generative media artworks.
 
 ### Prompt archive. Model notes. Hosted media.
 
@@ -36,12 +36,13 @@ AI image gallery for generative media artworks.
 [![Next.js](https://custom-icon-badges.demolab.com/badge/next_js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
 [![React](https://custom-icon-badges.demolab.com/badge/react-53C1DE?style=for-the-badge&logo=react&logoColor=white)](https://react.dev)
 [![Base UI](https://custom-icon-badges.demolab.com/badge/base_ui-111827?style=for-the-badge&logo=baseui&logoColor=white)](https://base-ui.com)
-[![Cloudflare Images](https://custom-icon-badges.demolab.com/badge/cloudflare_images-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/images)
+[![Cloudflare Images](https://custom-icon-badges.demolab.com/badge/cloudflare_images-F38020?style=for-the-badge&logo=cloudflare-images&logoColor=white)](https://developers.cloudflare.com/images)
 
 <br />
 
 <strong>One-click deploy</strong>
 
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/babysea-community/image-gallery-starter)
 [![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/babysea-community/image-gallery-starter/tree/main)
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/babysea-community/image-gallery-starter)  
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/babysea-community/image-gallery-starter)
@@ -157,6 +158,10 @@ The starter ships with 36 ordered Cloudflare Images records in [`lib/gallery/sou
 
 ## Deployment
 
+### Cloudflare
+
+[`wrangler.jsonc`](wrangler.jsonc) and [`open-next.config.ts`](open-next.config.ts) deploy this Next.js starter to Cloudflare Workers through OpenNext. Use the Deploy to Cloudflare button above, or set the Cloudflare deploy command to `pnpm run deploy`. Set `NEXT_PUBLIC_SITE_URL` to the Worker or custom domain and configure values from [`.env.example`](.env.example). Use `pnpm run preview` for local Worker previews.
+
 ### DigitalOcean
 
 [`.do/deploy.template.yaml`](.do/deploy.template.yaml) defines the DigitalOcean App Platform service, build command, start command, and environment prompts. Set `NEXT_PUBLIC_SITE_URL` to the App Platform or custom domain and configure the Cloudflare Images variables during app creation.
@@ -179,17 +184,17 @@ Keep the checked-in [`vercel.json`](vercel.json) framework settings. Set `NEXT_P
 
 ## Customize
 
-| Change             | Files                                                                                                                                              |
-| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Gallery images     | [`lib/gallery/source-gallery-images.ts`](lib/gallery/source-gallery-images.ts)                                                                     |
-| Gallery types      | [`lib/gallery/gallery-image.ts`](lib/gallery/gallery-image.ts)                                                                                     |
-| Homepage layout    | [`app/page.tsx`](app/page.tsx)                                                                                                                     |
-| Metadata and icons | [`app/layout.tsx`](app/layout.tsx), [`public/icon.png`](public/icon.png), [`public/card.png`](public/card.png)                                     |
-| Visual system      | [`styles/globals.css`](styles/globals.css)                                                                                                         |
-| Image protection   | [`components/protected-image.tsx`](components/protected-image.tsx), [`components/gallery/touch-event.tsx`](components/gallery/touch-event.tsx)     |
-| Security headers   | [`lib/security/csp.ts`](lib/security/csp.ts), [`next.config.ts`](next.config.ts)                                                                   |
-| Monitoring         | [`instrumentation.ts`](instrumentation.ts), [`instrumentation-client.ts`](instrumentation-client.ts), [`lib/monitoring`](lib/monitoring)           |
-| Deploy config      | [`.do/deploy.template.yaml`](.do/deploy.template.yaml), [`netlify.toml`](netlify.toml), [`render.yaml`](render.yaml), [`vercel.json`](vercel.json) |
+| Change             | Files                                                                                                                                                                                                                                |
+| :----------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Gallery images     | [`lib/gallery/source-gallery-images.ts`](lib/gallery/source-gallery-images.ts)                                                                                                                                                       |
+| Gallery types      | [`lib/gallery/gallery-image.ts`](lib/gallery/gallery-image.ts)                                                                                                                                                                       |
+| Homepage layout    | [`app/page.tsx`](app/page.tsx)                                                                                                                                                                                                       |
+| Metadata and icons | [`app/layout.tsx`](app/layout.tsx), [`public/icon.png`](public/icon.png), [`public/card.png`](public/card.png)                                                                                                                       |
+| Visual system      | [`styles/globals.css`](styles/globals.css)                                                                                                                                                                                           |
+| Image protection   | [`components/protected-image.tsx`](components/protected-image.tsx), [`components/gallery/touch-event.tsx`](components/gallery/touch-event.tsx)                                                                                       |
+| Security headers   | [`lib/security/csp.ts`](lib/security/csp.ts), [`next.config.ts`](next.config.ts)                                                                                                                                                     |
+| Monitoring         | [`instrumentation.ts`](instrumentation.ts), [`instrumentation-client.ts`](instrumentation-client.ts), [`lib/monitoring`](lib/monitoring)                                                                                             |
+| Deploy config      | [`.do/deploy.template.yaml`](.do/deploy.template.yaml), [`netlify.toml`](netlify.toml), [`open-next.config.ts`](open-next.config.ts), [`render.yaml`](render.yaml), [`vercel.json`](vercel.json), [`wrangler.jsonc`](wrangler.jsonc) |
 
 ## Troubleshooting
 

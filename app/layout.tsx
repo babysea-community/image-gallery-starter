@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import '@/styles/globals.css';
 
 const title = 'Image Gallery Starter';
-const description = 'AI image gallery for generative media artworks.';
+const description = 'Image gallery for generative media artworks.';
 const socialImageUrl =
   'https://cdn.babysea.live/assets/oss/image-gallery-starter-card.png';
 

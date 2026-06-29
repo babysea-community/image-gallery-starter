@@ -5,6 +5,7 @@ minimumReleaseAge: 0
 
 catalog:
   '@base-ui/react': 1.5.0
+  '@opennextjs/cloudflare': 1.19.11
   '@sentry/nextjs': 10.40.0
   '@eslint/js': 10.0.1
   '@next/eslint-plugin-next': 16.2.9
@@ -29,14 +30,19 @@ catalog:
   typescript: 6.0.3
   typescript-eslint: 8.60.0
   vitest: 4.1.9
+  wrangler: 4.97.0
 
 onlyBuiltDependencies:
   - '@sentry/cli'
   - '@tailwindcss/oxide'
+  - esbuild
   - sharp
   - unrs-resolver
+  - workerd
 
 allowBuilds:
   '@sentry/cli': true
+  esbuild: true
   sharp: true
   unrs-resolver: true
+  workerd: true

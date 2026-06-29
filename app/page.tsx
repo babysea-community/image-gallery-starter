@@ -12,6 +12,7 @@ import {
   InlineRender,
   InlineVercel,
 } from '@/components/icons/inline-host';
+import { InlineCloudflareImages } from '@/components/icons/inline-storage';
 import { ProtectedImage } from '@/components/protected-image';
 import { cloudflareImageUrl } from '@/lib/cloudflare-images';
 import { featureCarouselImages as featureGalleryImages } from '@/lib/gallery/feature-carousel-images';
@@ -21,6 +22,7 @@ import { stackSectionImages } from '@/lib/gallery/stack-section-images';
 import { cn } from '@/lib/utils';
 import { Dialog } from '@base-ui/react/dialog';
 import {
+  ArrowRight,
   Camera,
   ChevronLeft,
   ChevronRight,
@@ -121,6 +123,7 @@ const featureGalleryGroups = [
 ].filter((group) => group.length > 0);
 
 const deployHosts = [
+  { label: 'Cloudflare', Icon: InlineCloudflare },
   { label: 'DigitalOcean', Icon: InlineDigitalOcean },
   { label: 'Netlify', Icon: InlineNetlify },
   { label: 'Railway', Icon: InlineRailway },
@@ -319,7 +322,7 @@ function Hero() {
 
         <div>
           <p className="max-w-5xl text-base leading-7 text-[#3c4774] sm:text-lg">
-            AI image gallery for generative media artworks, collecting finished
+            Image gallery for generative media artworks, collecting finished
             studies, prompt notes, model details, and visual experiments in one
             polished creative archive.
           </p>
@@ -633,9 +636,24 @@ function CloudflareImageBox() {
       <div className="text-[0.68rem] font-black tracking-[0.2em] text-[#5f6b99] uppercase">
         Powered by Cloudflare Images
       </div>
-      <span className="flex size-14 items-center justify-center rounded-2xl bg-white/40 p-2.5 shadow-sm">
-        <InlineCloudflare className="h-8 w-12" aria-hidden="true" />
-      </span>
+      <div className="flex items-center gap-2">
+        <span className="flex size-11 items-center justify-center rounded-xl bg-white/40 p-2 shadow-sm sm:size-14 sm:rounded-2xl sm:p-2.5">
+          <InlineCloudflare
+            className="h-6 w-9 sm:h-8 sm:w-12"
+            aria-hidden="true"
+          />
+        </span>
+        <ArrowRight
+          className="size-4 shrink-0 text-[#7d87b4] sm:size-5"
+          aria-hidden="true"
+        />
+        <span className="flex size-11 items-center justify-center rounded-xl bg-white/40 p-2.5 shadow-sm sm:size-14 sm:rounded-2xl sm:p-3">
+          <InlineCloudflareImages
+            className="size-6 sm:size-8"
+            aria-hidden="true"
+          />
+        </span>
+      </div>
     </div>
   );
 }
@@ -643,16 +661,16 @@ function CloudflareImageBox() {
 function DeployHostIcons() {
   return (
     <span
-      className="flex flex-wrap items-center gap-2"
+      className="flex flex-wrap items-center gap-1.5 sm:gap-2"
       aria-label="Hosting options"
     >
       {deployHosts.map(({ Icon, label }) => (
         <span
           key={label}
           title={label}
-          className="flex size-14 items-center justify-center rounded-2xl bg-white/40 p-3 shadow-sm"
+          className="flex size-11 items-center justify-center rounded-xl bg-white/40 p-2.5 shadow-sm sm:size-14 sm:rounded-2xl sm:p-3"
         >
-          <Icon className="size-8" aria-hidden="true" />
+          <Icon className="size-6 sm:size-8" aria-hidden="true" />
           <span className="sr-only">{label}</span>
         </span>
       ))}
@@ -728,7 +746,7 @@ function FooterPanel() {
           Let's connect & explore creative possibilities together.
         </p>
       </div>
-      <div className="mt-5 flex max-w-full flex-nowrap gap-2 overflow-x-auto pb-1 sm:mt-0 sm:justify-end sm:overflow-visible sm:pb-0">
+      <div className="mt-5 flex max-w-full flex-nowrap gap-1.5 overflow-x-auto pb-1 sm:mt-0 sm:gap-2 sm:justify-end sm:overflow-visible sm:pb-0">
         {creatorSocialLinks.map((item) => (
           <FooterLink key={item.label} item={item} />
         ))}
@@ -740,7 +758,7 @@ function FooterPanel() {
 function SimpleIcon({ icon }: { icon: SimpleIconDefinition }) {
   return (
     <svg
-      className="size-5"
+      className="size-4 sm:size-5"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
@@ -757,14 +775,14 @@ function FooterLink({ item }: { item: (typeof creatorSocialLinks)[number] }) {
   return (
     <a
       href={item.href}
-      className="inline-flex size-11 items-center justify-center rounded-full bg-[#f0e8ff] text-[#35406f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#eadfff]"
+      className="inline-flex size-9 items-center justify-center rounded-full bg-[#f0e8ff] text-[#35406f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#eadfff] sm:size-11"
       aria-label={item.label}
       title={item.label}
     >
       {item.icon ? (
         <SimpleIcon icon={item.icon} />
       ) : Icon ? (
-        <Icon className="size-5" aria-hidden="true" />
+        <Icon className="size-4 sm:size-5" aria-hidden="true" />
       ) : null}
     </a>
   );

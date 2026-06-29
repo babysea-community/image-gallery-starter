@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "image-gallery-starter",
+  "main": ".open-next/worker.js",
+  "keep_vars": true,
+  "compatibility_date": "2026-06-29",
+  "compatibility_flags": ["nodejs_compat"],
+  "minify": true,
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".open-next/assets",
+  },
+  "observability": {
+    "enabled": true,
+  },
+  "placement": {
+    "mode": "smart",
+  },
+  "vars": {
+    "NEXT_PUBLIC_CLOUDFLARE_IMAGES_DELIVERY_ORIGIN": "https://imagedelivery.net",
+  },
+}
