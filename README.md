@@ -52,6 +52,10 @@ AI image gallery for generative media artworks.
 
 <img src="public/card.png" alt="Image Gallery Starter card" />
 
+<br />
+
+<img src="public/dashboard.png" alt="Image Gallery Starter dashboard" />
+
 </div>
 
 <br />
