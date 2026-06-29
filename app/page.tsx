@@ -198,19 +198,23 @@ function ArtworkImage({
 }) {
   const onErrorRef = useRef(onError);
   const onLoadedChangeRef = useRef(onLoadedChange);
+  const wrapperRef = useRef<HTMLSpanElement>(null);
   const [isLoaded, setIsLoaded] = useState(() => loadedArtworkUrls.has(src));
   const [showLoader, setShowLoader] = useState(false);
 
-  useEffect(() => {
-    onErrorRef.current = onError;
-    onLoadedChangeRef.current = onLoadedChange;
-  });
+  onErrorRef.current = onError;
+  onLoadedChangeRef.current = onLoadedChange;
+
+  function markLoaded() {
+    loadedArtworkUrls.add(src);
+    setIsLoaded(true);
+    setShowLoader(false);
+    onLoadedChangeRef.current?.(true);
+  }
 
   useEffect(() => {
     if (loadedArtworkUrls.has(src)) {
-      setIsLoaded(true);
-      setShowLoader(false);
-      onLoadedChangeRef.current?.(true);
+      markLoaded();
 
       return;
     }
@@ -223,20 +227,22 @@ function ArtworkImage({
       setShowLoader(true);
     }, 180);
 
+    const completeCheck = window.requestAnimationFrame(() => {
+      const image = wrapperRef.current?.querySelector('img');
+
+      if (image?.complete && image.naturalWidth > 0) {
+        markLoaded();
+      }
+    });
+
     return () => {
       window.clearTimeout(loaderTimer);
+      window.cancelAnimationFrame(completeCheck);
     };
   }, [src]);
 
-  function handleLoaded() {
-    loadedArtworkUrls.add(src);
-    setIsLoaded(true);
-    setShowLoader(false);
-    onLoadedChangeRef.current?.(true);
-  }
-
   return (
-    <span className={wrapperClassName}>
+    <span ref={wrapperRef} className={wrapperClassName}>
       <ProtectedImage
         src={src}
         alt=""
@@ -254,7 +260,7 @@ function ArtworkImage({
           onLoadedChangeRef.current?.(false);
           onErrorRef.current?.();
         }}
-        onLoad={handleLoaded}
+        onLoad={markLoaded}
       />
       {!isLoaded && showLoader ? (
         <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-[#f8f4ff]/55 text-[#6f7bae]">
@@ -460,7 +466,7 @@ function FeatureStack({
                   key={artwork.id}
                   artwork={artwork}
                   frameClassName="aspect-square"
-                  priority={groupIndex === 0 && index < 4}
+                  priority={groupIndex === 0 && index < 2}
                   onClick={() => onOpenArtwork(items, index)}
                 />
               ))}
@@ -482,7 +488,7 @@ function FeatureStack({
                     <FeatureGalleryCard
                       artwork={artwork}
                       frameClassName={artworkAspectClassName(artwork)}
-                      priority={groupIndex === 0 && index < 4}
+                      priority={groupIndex === 0 && index < 2}
                       onClick={() => onOpenArtwork(items, index)}
                     />
                   </div>
@@ -578,8 +584,7 @@ function GalleryGridCard({
       <ArtworkImage
         src={imageUrl(artwork)}
         className="h-full w-full object-cover"
-        fetchPriority={index < 6 ? 'high' : 'auto'}
-        loading={index < 6 ? 'eager' : 'lazy'}
+        loading="lazy"
       />
       <Caption artwork={artwork} />
     </button>
