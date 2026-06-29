@@ -1,0 +1,18 @@
+spec:
+  name: image-gallery-starter
+  services:
+    - name: web
+      environment_slug: node-js
+      git:
+        branch: main
+        repo_clone_url: https://github.com/babysea-community/image-gallery-starter.git
+      build_command: corepack enable && pnpm install --frozen-lockfile && pnpm build
+      run_command: pnpm start -- -p $PORT
+      envs:
+        - key: NEXT_PUBLIC_SITE_URL
+          scope: RUN_AND_BUILD_TIME
+        - key: NEXT_PUBLIC_CLOUDFLARE_IMAGES_ACCOUNT_HASH
+          scope: RUN_AND_BUILD_TIME
+        - key: NEXT_PUBLIC_CLOUDFLARE_IMAGES_DELIVERY_ORIGIN
+          scope: RUN_AND_BUILD_TIME
+          value: https://imagedelivery.net

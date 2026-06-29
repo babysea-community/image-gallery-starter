@@ -1,0 +1,11 @@
+[build]
+  command = "pnpm run build"
+  publish = ".next"
+
+[template.environment]
+  NEXT_PUBLIC_SITE_URL = "Required. The exact URL where Image Gallery Starter runs, for example https://<your_domain>."
+  NEXT_PUBLIC_CLOUDFLARE_IMAGES_ACCOUNT_HASH = "Required. Your Cloudflare Images account hash."
+  NEXT_PUBLIC_CLOUDFLARE_IMAGES_DELIVERY_ORIGIN = "Optional. Cloudflare Images delivery origin. Default https://imagedelivery.net."
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"

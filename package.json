@@ -1,0 +1,72 @@
+{
+  "name": "image-gallery-starter",
+  "version": "0.1.0",
+  "description": "AI image gallery for generative media artworks.",
+  "private": true,
+  "license": "Apache-2.0",
+  "homepage": "https://image-gallery-starter.babysea.live",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/babysea-community/image-gallery-starter.git"
+  },
+  "keywords": [
+    "babysea",
+    "open-source",
+    "starter",
+    "portfolio",
+    "image-gallery",
+    "cloudflare-images",
+    "creator-tools",
+    "nextjs",
+    "react",
+    "base-ui",
+    "tailwindcss"
+  ],
+  "engines": {
+    "node": ">=24.14.0 <25"
+  },
+  "scripts": {
+    "build": "next build",
+    "clean": "git clean -xdf .next .turbo node_modules",
+    "dev": "next dev --port=3011",
+    "sentry:check": "node scripts/sentry-project-check.mjs",
+    "format": "prettier --check \"**/*.{ts,tsx,css,md,json,mjs}\"",
+    "format:fix": "prettier --write \"**/*.{ts,tsx,css,md,json,mjs}\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "next start",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@base-ui/react": "catalog:",
+    "@sentry/nextjs": "catalog:",
+    "clsx": "catalog:",
+    "lucide-react": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "server-only": "catalog:",
+    "simple-icons": "catalog:",
+    "tailwind-merge": "catalog:"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@next/eslint-plugin-next": "catalog:",
+    "@tailwindcss/postcss": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "babel-plugin-react-compiler": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-next": "catalog:",
+    "globals": "catalog:",
+    "prettier": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vitest": "catalog:"
+  },
+  "packageManager": "pnpm@11.7.0"
+}

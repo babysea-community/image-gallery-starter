@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: image-gallery-starter
+    runtime: node
+    autoDeploy: false
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm start -- -p $PORT
+    envVars:
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+      - key: NEXT_PUBLIC_CLOUDFLARE_IMAGES_ACCOUNT_HASH
+        sync: false
+      - key: NEXT_PUBLIC_CLOUDFLARE_IMAGES_DELIVERY_ORIGIN
+        value: https://imagedelivery.net
