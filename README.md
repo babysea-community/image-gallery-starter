@@ -43,10 +43,10 @@ Image gallery for generative media artworks.
 <strong>One-click deploy</strong>
 
 [![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/babysea-community/image-gallery-starter)
-[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/babysea-community/image-gallery-starter/tree/main)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/babysea-community/image-gallery-starter)  
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/babysea-community/image-gallery-starter)
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/babysea-community/image-gallery-starter)  
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/babysea-community/image-gallery-starter/tree/main)  
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/babysea-community/image-gallery-starter)
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/babysea-community/image-gallery-starter)  
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/babysea-community/image-gallery-starter)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbabysea-community%2Fimage-gallery-starter&project-name=image-gallery-starter&repository-name=image-gallery-starter&env=NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_CLOUDFLARE_IMAGES_ACCOUNT_HASH,NEXT_PUBLIC_CLOUDFLARE_IMAGES_DELIVERY_ORIGIN)
 
 <br />

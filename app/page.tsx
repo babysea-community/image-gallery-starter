@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useGalleryTouchEvents } from '@/components/gallery/touch-event';
 import { InlineGitHub } from '@/components/icons/inline-git';
@@ -31,6 +31,7 @@ import {
   Globe2,
   Layers,
   Linkedin,
+  LoaderCircle,
   type LucideIcon,
   Mail,
   Palette,
@@ -426,6 +427,7 @@ function FeatureGalleryCard({
           alt={artwork.alt}
           className="h-full w-full object-cover"
           loading="lazy"
+          showLoader
         />
       </span>
       <span className="absolute inset-0 bg-gradient-to-b from-white/18 to-white/8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-[.touch-active]:opacity-100" />
@@ -486,6 +488,7 @@ function GalleryGridCard({
         alt={artwork.alt}
         className="h-full w-full object-cover"
         loading="lazy"
+        showLoader
       />
       <Caption artwork={artwork} />
     </button>
@@ -531,6 +534,7 @@ function StackedSpotlights({
                   alt={artwork.alt}
                   className="h-full w-full object-cover"
                   loading="lazy"
+                  showLoader
                 />
               </button>
             ))}
@@ -570,6 +574,12 @@ function Lightbox({
   onNext: () => void;
   onPrevious: () => void;
 }) {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsImageLoaded(false);
+  }, [artwork.id]);
+
   return (
     <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_18rem]">
       <Dialog.Title className="sr-only">{artwork.title}</Dialog.Title>
@@ -578,6 +588,8 @@ function Lightbox({
           src={imageUrl(artwork)}
           alt={artwork.alt}
           className="max-h-[78vh] w-full object-contain"
+          onLoadedChange={setIsImageLoaded}
+          showLoader
         />
         {canNavigate ? (
           <>
@@ -601,30 +613,39 @@ function Lightbox({
         ) : null}
       </div>
       <aside className="rounded-[1.25rem] bg-gradient-to-br from-white to-[#f8f1ff] p-5">
-        <div className="mb-5 flex items-start justify-between gap-3">
-          <div>
-            <p className="text-xs font-black tracking-[0.22em] text-[#9aa0c4] uppercase">
-              {artwork.collection}
-            </p>
-            <p className="mt-2 text-3xl font-black tracking-[-0.04em] text-[#131947]">
-              {artwork.title}
-            </p>
+        {isImageLoaded ? (
+          <>
+            <div className="mb-5 flex items-start justify-between gap-3">
+              <div>
+                <p className="text-xs font-black tracking-[0.22em] text-[#9aa0c4] uppercase">
+                  {artwork.collection}
+                </p>
+                <p className="mt-2 text-3xl font-black tracking-[-0.04em] text-[#131947]">
+                  {artwork.title}
+                </p>
+              </div>
+              <Dialog.Close
+                className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-xl font-black text-[#68739b] shadow-sm transition hover:text-[#131947]"
+                aria-label="Close lightbox"
+              >
+                x
+              </Dialog.Close>
+            </div>
+            <div className="space-y-3 text-sm text-[#68739b]">
+              <InfoBox label="Prompt" value={artwork.prompt} />
+              <InfoBox label="Model" value={artwork.model} />
+              <InfoBox
+                label="Size"
+                value={`${artwork.width} x ${artwork.height}`}
+              />
+            </div>
+          </>
+        ) : (
+          <div className="flex min-h-[18rem] items-center justify-center text-[#6f7bae]">
+            <LoaderCircle className="size-6 animate-spin" aria-hidden="true" />
+            <span className="sr-only">Loading image metadata</span>
           </div>
-          <Dialog.Close
-            className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-xl font-black text-[#68739b] shadow-sm transition hover:text-[#131947]"
-            aria-label="Close lightbox"
-          >
-            x
-          </Dialog.Close>
-        </div>
-        <div className="space-y-3 text-sm text-[#68739b]">
-          <InfoBox label="Prompt" value={artwork.prompt} />
-          <InfoBox label="Model" value={artwork.model} />
-          <InfoBox
-            label="Size"
-            value={`${artwork.width} x ${artwork.height}`}
-          />
-        </div>
+        )}
       </aside>
     </div>
   );
@@ -758,7 +779,7 @@ function FooterPanel() {
 function SimpleIcon({ icon }: { icon: SimpleIconDefinition }) {
   return (
     <svg
-      className="size-4 sm:size-5"
+      className="size-3.5 sm:size-4"
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"
@@ -775,14 +796,14 @@ function FooterLink({ item }: { item: (typeof creatorSocialLinks)[number] }) {
   return (
     <a
       href={item.href}
-      className="inline-flex size-9 items-center justify-center rounded-full bg-[#f0e8ff] text-[#35406f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#eadfff] sm:size-11"
+      className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-[#f0e8ff] text-[#35406f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#eadfff] sm:size-10"
       aria-label={item.label}
       title={item.label}
     >
       {item.icon ? (
         <SimpleIcon icon={item.icon} />
       ) : Icon ? (
-        <Icon className="size-4 sm:size-5" aria-hidden="true" />
+        <Icon className="size-3.5 sm:size-4" aria-hidden="true" />
       ) : null}
     </a>
   );
