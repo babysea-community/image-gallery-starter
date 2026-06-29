@@ -179,6 +179,7 @@ function imageUrl(artwork: GalleryImage) {
 
 function ArtworkImage({
   className,
+  fetchPriority = 'auto',
   loading,
   onError,
   onLoadedChange,
@@ -186,6 +187,7 @@ function ArtworkImage({
   wrapperClassName = 'relative block h-full w-full',
 }: {
   className: string;
+  fetchPriority?: 'auto' | 'high' | 'low';
   loading?: 'eager' | 'lazy';
   onError?: () => void;
   onLoadedChange?: (isLoaded: boolean) => void;
@@ -203,7 +205,13 @@ function ArtworkImage({
       <ProtectedImage
         src={src}
         alt=""
-        className={className}
+        className={cn(
+          className,
+          'transition-opacity duration-300 ease-out',
+          isLoaded ? 'opacity-100' : 'opacity-0',
+        )}
+        decoding="async"
+        fetchPriority={fetchPriority}
         loading={loading}
         onError={() => {
           setIsLoaded(false);
@@ -216,8 +224,8 @@ function ArtworkImage({
         }}
       />
       {!isLoaded ? (
-        <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-white/30 text-[#6f7bae] backdrop-blur-[1px]">
-          <LoaderCircle className="size-6 animate-spin" aria-hidden="true" />
+        <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-[#f8f4ff]/55 text-[#6f7bae]">
+          <LoaderCircle className="size-5 animate-spin" aria-hidden="true" />
           <span className="sr-only">Loading image</span>
         </span>
       ) : null}
@@ -419,6 +427,7 @@ function FeatureStack({
                   key={artwork.id}
                   artwork={artwork}
                   frameClassName="aspect-square"
+                  priority={groupIndex === 0 && index < 4}
                   onClick={() => onOpenArtwork(items, index)}
                 />
               ))}
@@ -440,6 +449,7 @@ function FeatureStack({
                     <FeatureGalleryCard
                       artwork={artwork}
                       frameClassName={artworkAspectClassName(artwork)}
+                      priority={groupIndex === 0 && index < 4}
                       onClick={() => onOpenArtwork(items, index)}
                     />
                   </div>
@@ -457,10 +467,12 @@ function FeatureGalleryCard({
   artwork,
   frameClassName,
   onClick,
+  priority = false,
 }: {
   artwork: GalleryImage;
   frameClassName: string;
   onClick: () => void;
+  priority?: boolean;
 }) {
   return (
     <button
@@ -473,7 +485,8 @@ function FeatureGalleryCard({
         <ArtworkImage
           src={imageUrl(artwork)}
           className="h-full w-full object-cover"
-          loading="lazy"
+          fetchPriority={priority ? 'high' : 'auto'}
+          loading={priority ? 'eager' : 'lazy'}
         />
       </span>
       <span className="absolute inset-0 bg-gradient-to-b from-white/18 to-white/8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-[.touch-active]:opacity-100" />
@@ -532,7 +545,8 @@ function GalleryGridCard({
       <ArtworkImage
         src={imageUrl(artwork)}
         className="h-full w-full object-cover"
-        loading="lazy"
+        fetchPriority={index < 6 ? 'high' : 'auto'}
+        loading={index < 6 ? 'eager' : 'lazy'}
       />
       <Caption artwork={artwork} />
     </button>
@@ -637,6 +651,8 @@ function Lightbox({
         <ArtworkImage
           src={imageUrl(artwork)}
           className="max-h-[78vh] w-full object-contain"
+          fetchPriority="high"
+          loading="eager"
           onError={() => {
             setImageLoadState({ artworkId: artwork.id, status: 'error' });
           }}
