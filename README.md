@@ -43,9 +43,9 @@ AI image gallery for generative media artworks.
 <strong>One-click deploy</strong>
 
 [![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/babysea-community/image-gallery-starter/tree/main)
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/babysea-community/image-gallery-starter)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/babysea-community/image-gallery-starter)  
 [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/new/template?template=https://github.com/babysea-community/image-gallery-starter)
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/babysea-community/image-gallery-starter)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/babysea-community/image-gallery-starter)  
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fbabysea-community%2Fimage-gallery-starter&project-name=image-gallery-starter&repository-name=image-gallery-starter&env=NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_CLOUDFLARE_IMAGES_ACCOUNT_HASH,NEXT_PUBLIC_CLOUDFLARE_IMAGES_DELIVERY_ORIGIN)
 
 <br />
@@ -153,10 +153,6 @@ The starter ships with 36 ordered Cloudflare Images records in [`lib/gallery/sou
 
 ## Deployment
 
-### Vercel
-
-Keep the checked-in [`vercel.json`](vercel.json) framework settings. Set `NEXT_PUBLIC_SITE_URL` to the Vercel or custom domain, and set `NEXT_PUBLIC_CLOUDFLARE_IMAGES_ACCOUNT_HASH` to your Cloudflare Images account hash.
-
 ### DigitalOcean
 
 [`.do/deploy.template.yaml`](.do/deploy.template.yaml) defines the DigitalOcean App Platform service, build command, start command, and environment prompts. Set `NEXT_PUBLIC_SITE_URL` to the App Platform or custom domain and configure the Cloudflare Images variables during app creation.
@@ -172,6 +168,10 @@ Use the Deploy on Railway button above to create a new Railway project from the 
 ### Render
 
 [`render.yaml`](render.yaml) builds with `pnpm build` and runs `pnpm start -- -p $PORT`. Add the variables from [`.env.example`](.env.example) in the Render dashboard before the first deploy.
+
+### Vercel
+
+Keep the checked-in [`vercel.json`](vercel.json) framework settings. Set `NEXT_PUBLIC_SITE_URL` to the Vercel or custom domain, and set `NEXT_PUBLIC_CLOUDFLARE_IMAGES_ACCOUNT_HASH` to your Cloudflare Images account hash.
 
 ## Customize
 
