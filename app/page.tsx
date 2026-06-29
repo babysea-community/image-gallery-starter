@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useGalleryTouchEvents } from '@/components/gallery/touch-event';
 import { InlineGitHub } from '@/components/icons/inline-git';
@@ -173,6 +173,8 @@ const collectionIcons: LucideIcon[] = [
   Layers,
 ];
 
+const loadedArtworkUrls = new Set<string>();
+
 function imageUrl(artwork: GalleryImage) {
   return cloudflareImageUrl(artwork.imageId, artwork.variant);
 }
@@ -194,11 +196,44 @@ function ArtworkImage({
   src: string;
   wrapperClassName?: string;
 }) {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const onErrorRef = useRef(onError);
+  const onLoadedChangeRef = useRef(onLoadedChange);
+  const [isLoaded, setIsLoaded] = useState(() => loadedArtworkUrls.has(src));
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
+    onErrorRef.current = onError;
+    onLoadedChangeRef.current = onLoadedChange;
+  });
+
+  useEffect(() => {
+    if (loadedArtworkUrls.has(src)) {
+      setIsLoaded(true);
+      setShowLoader(false);
+      onLoadedChangeRef.current?.(true);
+
+      return;
+    }
+
     setIsLoaded(false);
+    setShowLoader(false);
+    onLoadedChangeRef.current?.(false);
+
+    const loaderTimer = window.setTimeout(() => {
+      setShowLoader(true);
+    }, 180);
+
+    return () => {
+      window.clearTimeout(loaderTimer);
+    };
   }, [src]);
+
+  function handleLoaded() {
+    loadedArtworkUrls.add(src);
+    setIsLoaded(true);
+    setShowLoader(false);
+    onLoadedChangeRef.current?.(true);
+  }
 
   return (
     <span className={wrapperClassName}>
@@ -215,15 +250,13 @@ function ArtworkImage({
         loading={loading}
         onError={() => {
           setIsLoaded(false);
-          onLoadedChange?.(false);
-          onError?.();
+          setShowLoader(false);
+          onLoadedChangeRef.current?.(false);
+          onErrorRef.current?.();
         }}
-        onLoad={() => {
-          setIsLoaded(true);
-          onLoadedChange?.(true);
-        }}
+        onLoad={handleLoaded}
       />
-      {!isLoaded ? (
+      {!isLoaded && showLoader ? (
         <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-[#f8f4ff]/55 text-[#6f7bae]">
           <LoaderCircle className="size-5 animate-spin" aria-hidden="true" />
           <span className="sr-only">Loading image</span>
@@ -359,7 +392,7 @@ function Hero() {
                   Open source
                 </p>
                 <p className="mt-1 text-sm font-black text-[#3e4b7e]">
-                  Generative Media Community
+                  Artwork Community
                 </p>
               </div>
             </div>
@@ -848,7 +881,7 @@ function FooterPanel() {
           Let's connect & explore creative possibilities together.
         </p>
       </div>
-      <div className="mt-5 grid max-w-full grid-cols-7 justify-items-center gap-1.5 pb-1 sm:mt-0 sm:gap-2 lg:flex lg:flex-wrap lg:justify-end lg:pb-0">
+      <div className="mt-5 grid max-w-fit grid-cols-7 justify-items-center gap-1 pb-1 sm:mt-0 sm:gap-1.5 lg:flex lg:max-w-full lg:flex-nowrap lg:justify-end lg:gap-2 lg:pb-0">
         {creatorSocialLinks.map((item) => (
           <FooterLink key={item.label} item={item} />
         ))}
@@ -877,7 +910,7 @@ function FooterLink({ item }: { item: (typeof creatorSocialLinks)[number] }) {
   return (
     <a
       href={item.href}
-      className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-[#f0e8ff] text-[#35406f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#eadfff] sm:size-10"
+      className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-[#f0e8ff] text-[#35406f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#eadfff] sm:size-8 lg:size-10"
       aria-label={item.label}
       title={item.label}
     >

@@ -5,6 +5,11 @@ const title = 'Image Gallery Starter';
 const description = 'Image gallery for generative media artworks.';
 const socialImageUrl =
   'https://cdn.babysea.live/assets/oss/image-gallery-starter-card.png';
+const defaultCloudflareImagesOrigin = 'https://imagedelivery.net';
+const cloudflareImagesDeliveryOrigin = getUrlOrigin(
+  process.env.NEXT_PUBLIC_CLOUDFLARE_IMAGES_DELIVERY_ORIGIN ??
+    defaultCloudflareImagesOrigin,
+);
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://image-gallery-starter.babysea.live'),
@@ -66,7 +71,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="dns-prefetch" href={cloudflareImagesDeliveryOrigin} />
+        <link rel="preconnect" href={cloudflareImagesDeliveryOrigin} />
+      </head>
       <body>{children}</body>
     </html>
   );
+}
+
+function getUrlOrigin(url: string) {
+  try {
+    return new URL(url).origin;
+  } catch {
+    return defaultCloudflareImagesOrigin;
+  }
 }
