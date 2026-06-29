@@ -198,6 +198,7 @@ function ArtworkImage({
 }) {
   const onErrorRef = useRef(onError);
   const onLoadedChangeRef = useRef(onLoadedChange);
+  const isSettledRef = useRef(false);
   const wrapperRef = useRef<HTMLSpanElement>(null);
   const [isLoaded, setIsLoaded] = useState(() => loadedArtworkUrls.has(src));
   const [showLoader, setShowLoader] = useState(false);
@@ -206,6 +207,7 @@ function ArtworkImage({
   onLoadedChangeRef.current = onLoadedChange;
 
   function markLoaded() {
+    isSettledRef.current = true;
     loadedArtworkUrls.add(src);
     setIsLoaded(true);
     setShowLoader(false);
@@ -221,10 +223,13 @@ function ArtworkImage({
 
     setIsLoaded(false);
     setShowLoader(false);
+    isSettledRef.current = false;
     onLoadedChangeRef.current?.(false);
 
     const loaderTimer = window.setTimeout(() => {
-      setShowLoader(true);
+      if (!isSettledRef.current) {
+        setShowLoader(true);
+      }
     }, 180);
 
     const completeCheck = window.requestAnimationFrame(() => {
@@ -255,6 +260,7 @@ function ArtworkImage({
         fetchPriority={fetchPriority}
         loading={loading}
         onError={() => {
+          isSettledRef.current = true;
           setIsLoaded(false);
           setShowLoader(false);
           onLoadedChangeRef.current?.(false);
