@@ -943,18 +943,18 @@ function stackVariantClassName(index: number) {
 
 function collectionIconClassName(index: number) {
   const classNames = [
-    'rotate-[-12deg] translate-x-1',
+    'rotate-[-12deg] translate-x-1 -translate-y-3',
     'rotate-[7deg] translate-y-1',
     'rotate-[-4deg] translate-x-2',
     'rotate-[15deg] translate-y-1',
     'rotate-0 -translate-x-1',
-    'rotate-[-18deg] translate-y-1',
+    'rotate-[-18deg] -translate-y-3',
     'rotate-[10deg] -translate-x-2',
-    'rotate-[-8deg] translate-y-2',
+    'rotate-[-8deg] -translate-y-3',
     'rotate-[18deg] translate-x-1',
     'rotate-[-2deg] translate-y-2',
     'rotate-[5deg] -translate-x-1',
-    'rotate-[-15deg] translate-x-2',
+    'rotate-[-15deg] translate-x-2 -translate-y-3',
   ];
 
   return classNames[index % classNames.length] ?? classNames[0]!;
