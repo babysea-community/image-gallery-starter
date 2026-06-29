@@ -613,7 +613,7 @@ function StackedSpotlights({
               stackVariantClassName(stackIndex),
             )}
           >
-            <div className="relative z-20 max-w-[13rem] rounded-[1.1rem] bg-white/78 p-4 shadow-sm backdrop-blur">
+            <div className="relative z-20 max-w-[13rem] rounded-[1.1rem] bg-[#fff8fb] p-4 shadow-sm md:bg-white/78 md:backdrop-blur">
               <p className="text-[0.68rem] font-black tracking-[0.25em] text-[#9aa0c4] uppercase">
                 {stack.title}
               </p>

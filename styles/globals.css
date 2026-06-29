@@ -202,6 +202,46 @@ img {
   background: linear-gradient(135deg, #d9f7dd, #d5f5f0 48%, #dbe8ff);
 }
 
+@media (max-width: 767px) {
+  .section-surface-violet {
+    background: #e8ddff;
+    backdrop-filter: none;
+  }
+
+  .section-surface-violet::before {
+    display: none;
+  }
+
+  .section-surface-violet .stack-card {
+    box-shadow: none;
+  }
+
+  .section-surface-violet .stack-card-1 {
+    background: #ffd6e9;
+  }
+
+  .section-surface-violet .stack-card-2 {
+    background: #cceeff;
+  }
+
+  .section-surface-violet .stack-card-3 {
+    background: #e5ddff;
+  }
+
+  .section-surface-violet .stack-card-4 {
+    background: #ffe1d5;
+  }
+
+  .section-surface-violet .stack-card-5 {
+    background: #d9f4ee;
+  }
+
+  .section-surface-violet .image-frame {
+    background: #f8f3ff;
+    box-shadow: none;
+  }
+}
+
 .image-frame {
   border: 4px solid rgba(255, 255, 255, 0.9);
   background: linear-gradient(135deg, #dff4ff, #ffe5f1 52%, #eee6ff);
