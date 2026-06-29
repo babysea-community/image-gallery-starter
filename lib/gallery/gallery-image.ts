@@ -9,7 +9,6 @@ export type GalleryImage = {
   variant: string;
   width: number;
   height: number;
-  alt: string;
 };
 
 export type GalleryImageStack = {

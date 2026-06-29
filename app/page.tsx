@@ -28,7 +28,7 @@ import {
   ChevronRight,
   Cloud,
   Flower2,
-  Globe2,
+  Globe,
   Layers,
   Linkedin,
   LoaderCircle,
@@ -154,7 +154,7 @@ const creatorSocialLinks: Array<{
   { label: 'Pinterest', href: 'https://pinterest.com', icon: siPinterest },
   { label: 'Facebook', href: 'https://facebook.com', icon: siFacebook },
   { label: 'LinkedIn', href: 'https://linkedin.com', Icon: Linkedin },
-  { label: 'Website', href: '/', Icon: Globe2 },
+  { label: 'Website', href: '/', Icon: Globe },
   { label: 'Email', href: 'mailto:studio@example.com', Icon: Mail },
 ];
 
@@ -175,6 +175,54 @@ const collectionIcons: LucideIcon[] = [
 
 function imageUrl(artwork: GalleryImage) {
   return cloudflareImageUrl(artwork.imageId, artwork.variant);
+}
+
+function ArtworkImage({
+  className,
+  loading,
+  onError,
+  onLoadedChange,
+  src,
+  wrapperClassName = 'relative block h-full w-full',
+}: {
+  className: string;
+  loading?: 'eager' | 'lazy';
+  onError?: () => void;
+  onLoadedChange?: (isLoaded: boolean) => void;
+  src: string;
+  wrapperClassName?: string;
+}) {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(false);
+  }, [src]);
+
+  return (
+    <span className={wrapperClassName}>
+      <ProtectedImage
+        src={src}
+        alt=""
+        className={className}
+        loading={loading}
+        onError={() => {
+          setIsLoaded(false);
+          onLoadedChange?.(false);
+          onError?.();
+        }}
+        onLoad={() => {
+          setIsLoaded(true);
+          onLoadedChange?.(true);
+        }}
+      />
+      {!isLoaded ? (
+        <span className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-white/30 text-[#6f7bae] backdrop-blur-[1px]">
+          <LoaderCircle className="size-6 animate-spin" aria-hidden="true" />
+          <span className="sr-only">Loading image</span>
+        </span>
+      ) : null}
+    </span>
+  );
 }
 
 function artworkAspectClassName(artwork: GalleryImage) {
@@ -422,12 +470,10 @@ function FeatureGalleryCard({
       aria-label={`Open ${artwork.title}`}
     >
       <span className={`${frameClassName} block h-full w-full overflow-hidden`}>
-        <ProtectedImage
+        <ArtworkImage
           src={imageUrl(artwork)}
-          alt={artwork.alt}
           className="h-full w-full object-cover"
           loading="lazy"
-          showLoader
         />
       </span>
       <span className="absolute inset-0 bg-gradient-to-b from-white/18 to-white/8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-[.touch-active]:opacity-100" />
@@ -483,12 +529,10 @@ function GalleryGridCard({
       className="gallery-card image-frame group relative aspect-[4/5] w-full overflow-hidden rounded-[1.35rem] p-0 text-left transition duration-500 ease-out hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#75caff]"
       aria-label={`Open ${artwork.title}`}
     >
-      <ProtectedImage
+      <ArtworkImage
         src={imageUrl(artwork)}
-        alt={artwork.alt}
         className="h-full w-full object-cover"
         loading="lazy"
-        showLoader
       />
       <Caption artwork={artwork} />
     </button>
@@ -529,12 +573,10 @@ function StackedSpotlights({
                 )}
                 aria-label={`Open ${artwork.title}`}
               >
-                <ProtectedImage
+                <ArtworkImage
                   src={imageUrl(artwork)}
-                  alt={artwork.alt}
                   className="h-full w-full object-cover"
                   loading="lazy"
-                  showLoader
                 />
               </button>
             ))}
@@ -574,22 +616,37 @@ function Lightbox({
   onNext: () => void;
   onPrevious: () => void;
 }) {
-  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [imageLoadState, setImageLoadState] = useState<{
+    artworkId: string;
+    status: 'error' | 'loaded' | 'loading';
+  }>({
+    artworkId: artwork.id,
+    status: 'loading',
+  });
+  const imageStatus =
+    imageLoadState.artworkId === artwork.id ? imageLoadState.status : 'loading';
 
   useEffect(() => {
-    setIsImageLoaded(false);
+    setImageLoadState({ artworkId: artwork.id, status: 'loading' });
   }, [artwork.id]);
 
   return (
     <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_18rem]">
       <Dialog.Title className="sr-only">{artwork.title}</Dialog.Title>
       <div className="relative overflow-hidden rounded-[1.25rem] bg-[#f8f4ff]">
-        <ProtectedImage
+        <ArtworkImage
           src={imageUrl(artwork)}
-          alt={artwork.alt}
           className="max-h-[78vh] w-full object-contain"
-          onLoadedChange={setIsImageLoaded}
-          showLoader
+          onError={() => {
+            setImageLoadState({ artworkId: artwork.id, status: 'error' });
+          }}
+          onLoadedChange={(isLoaded) => {
+            setImageLoadState({
+              artworkId: artwork.id,
+              status: isLoaded ? 'loaded' : 'loading',
+            });
+          }}
+          wrapperClassName="relative block min-h-[18rem] w-full"
         />
         {canNavigate ? (
           <>
@@ -613,24 +670,28 @@ function Lightbox({
         ) : null}
       </div>
       <aside className="rounded-[1.25rem] bg-gradient-to-br from-white to-[#f8f1ff] p-5">
-        {isImageLoaded ? (
-          <>
-            <div className="mb-5 flex items-start justify-between gap-3">
-              <div>
-                <p className="text-xs font-black tracking-[0.22em] text-[#9aa0c4] uppercase">
-                  {artwork.collection}
-                </p>
-                <p className="mt-2 text-3xl font-black tracking-[-0.04em] text-[#131947]">
-                  {artwork.title}
-                </p>
-              </div>
-              <Dialog.Close
-                className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-xl font-black text-[#68739b] shadow-sm transition hover:text-[#131947]"
-                aria-label="Close lightbox"
-              >
-                x
-              </Dialog.Close>
+        <div className="mb-5 flex items-start justify-between gap-3">
+          {imageStatus === 'loaded' ? (
+            <div>
+              <p className="text-xs font-black tracking-[0.22em] text-[#9aa0c4] uppercase">
+                {artwork.collection}
+              </p>
+              <p className="mt-2 text-3xl font-black tracking-[-0.04em] text-[#131947]">
+                {artwork.title}
+              </p>
             </div>
+          ) : (
+            <span className="sr-only">{artwork.title}</span>
+          )}
+          <Dialog.Close
+            className="flex size-10 shrink-0 items-center justify-center rounded-full bg-white text-xl font-black text-[#68739b] shadow-sm transition hover:text-[#131947]"
+            aria-label="Close lightbox"
+          >
+            x
+          </Dialog.Close>
+        </div>
+        {imageStatus === 'loaded' ? (
+          <>
             <div className="space-y-3 text-sm text-[#68739b]">
               <InfoBox label="Prompt" value={artwork.prompt} />
               <InfoBox label="Model" value={artwork.model} />
@@ -640,6 +701,10 @@ function Lightbox({
               />
             </div>
           </>
+        ) : imageStatus === 'error' ? (
+          <div className="flex min-h-[18rem] items-center justify-center text-sm font-black text-[#6f7bae]">
+            Image failed to load.
+          </div>
         ) : (
           <div className="flex min-h-[18rem] items-center justify-center text-[#6f7bae]">
             <LoaderCircle className="size-6 animate-spin" aria-hidden="true" />
@@ -767,7 +832,7 @@ function FooterPanel() {
           Let's connect & explore creative possibilities together.
         </p>
       </div>
-      <div className="mt-5 flex max-w-full flex-nowrap gap-1.5 overflow-x-auto pb-1 sm:mt-0 sm:gap-2 sm:justify-end sm:overflow-visible sm:pb-0">
+      <div className="mt-5 grid max-w-full grid-cols-7 gap-1.5 pb-1 sm:mt-0 sm:flex sm:flex-nowrap sm:gap-2 sm:justify-end sm:pb-0">
         {creatorSocialLinks.map((item) => (
           <FooterLink key={item.label} item={item} />
         ))}
@@ -796,7 +861,7 @@ function FooterLink({ item }: { item: (typeof creatorSocialLinks)[number] }) {
   return (
     <a
       href={item.href}
-      className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-[#f0e8ff] text-[#35406f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#eadfff] sm:size-10"
+      className="inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-[#f0e8ff] text-[#35406f] shadow-sm transition hover:-translate-y-0.5 hover:bg-[#eadfff] sm:size-10"
       aria-label={item.label}
       title={item.label}
     >
@@ -826,7 +891,7 @@ function collectionIconClassName(index: number) {
     'rotate-[-18deg] translate-y-1',
     'rotate-[10deg] -translate-x-2',
     'rotate-[-8deg] translate-y-2',
-    'rotate-[18deg] translate-x-1',
+    'rotate-[18deg] translate-x-1 translate-y-8',
     'rotate-[-2deg] translate-y-2',
     'rotate-[5deg] -translate-x-1',
     'rotate-[-15deg] translate-x-2',
