@@ -1,20 +1,13 @@
 import type { Metadata } from 'next';
-
-import { cloudflareImageUrl } from '@/lib/cloudflare-images';
 import '@/styles/globals.css';
 
 const title = 'Image Gallery Starter';
 const description = 'AI image gallery for generative media artworks.';
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
-  'https://image-gallery-starter.babysea.live';
-const socialImageUrl = cloudflareImageUrl(
-  '79dddf5d-07ae-42dc-f659-6442e45a0200',
-  '1024x576',
-);
+const socialImageUrl =
+  'https://cdn.babysea.live/assets/oss/image-gallery-starter-card.png';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL('https://image-gallery-starter.babysea.live'),
   applicationName: title,
   title: {
     default: title,
@@ -22,24 +15,41 @@ export const metadata: Metadata = {
   },
   description,
   keywords: [
-    'image gallery',
-    'creator portfolio',
-    'Cloudflare Images',
-    'Next.js',
-    'Base UI',
+    'babysea',
+    'open-source',
+    'ai-infrastructure',
+    'control-plane',
+    'execution-layer',
+    'inference-providers',
+    'developer-tools',
+    'creative-tools',
+    'generative-ai',
+    'generative-media',
+    'cloudflare-images',
+    'sentry',
   ],
   icons: {
-    apple: [{ url: '/icon.png', type: 'image/png' }],
-    icon: [{ url: '/icon.png', type: 'image/png' }],
-    shortcut: ['/icon.png'],
+    icon: [{ url: '/favicon.ico', type: 'image/x-icon' }],
+    shortcut: ['/favicon.ico'],
   },
   openGraph: {
     title,
     description,
-    images: [{ alt: title, height: 576, url: socialImageUrl, width: 1024 }],
+    images: [
+      {
+        alt: title,
+        height: 630,
+        url: socialImageUrl,
+        width: 1200,
+      },
+    ],
     siteName: title,
     type: 'website',
     url: '/',
+  },
+  robots: {
+    follow: true,
+    index: true,
   },
   twitter: {
     card: 'summary_large_image',
