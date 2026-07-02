@@ -30,7 +30,7 @@ catalog:
   typescript: 6.0.3
   typescript-eslint: 8.60.0
   vitest: 4.1.9
-  wrangler: 4.97.0
+  wrangler: 4.107.0
 
 onlyBuiltDependencies:
   - '@sentry/cli'
