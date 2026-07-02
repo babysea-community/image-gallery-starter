@@ -19,9 +19,7 @@
     "developer-tools",
     "creative-tools",
     "generative-ai",
-    "generative-media",
-    "cloudflare-images",
-    "sentry"
+    "generative-media"
   ],
   "engines": {
     "node": ">=24.14.0 <25"

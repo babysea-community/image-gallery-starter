@@ -30,8 +30,6 @@ export const metadata: Metadata = {
     'creative-tools',
     'generative-ai',
     'generative-media',
-    'cloudflare-images',
-    'sentry',
   ],
   icons: {
     icon: [{ url: '/favicon.ico', type: 'image/x-icon' }],
