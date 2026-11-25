@@ -31,10 +31,11 @@ export const API_SECURITY_HEADERS = [
 ];
 
 /**
- * Builds the gallery starter's static CSP from public deployment env.
- * The app is a public, static gallery, so the allowlist is intentionally small:
- * own app assets, Cloudflare Images delivery, optional custom delivery origin,
- * and optional Sentry ingest when monitoring is enabled.
+ * Builds app's static CSP from the active deployment environment.
+ * App is a single private starter, so a small static policy in next.config
+ * keeps a strict allowlist discipline without needing middleware nonce
+ * plumbing. The CSP applies to HTML responses; JSON API responses under
+ * /api/* receive Cache-Control headers via API_SECURITY_HEADERS.
  */
 function buildContentSecurityPolicy() {
   const connectHosts = new Set<string>(["'self'"]);

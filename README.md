@@ -4,7 +4,7 @@
 
 # Image Gallery Starter
 
-Image gallery for generative media artworks.
+A polished, deployable Next.js gallery for showcasing generative artworks, creative prompts, model details, and hosted Cloudflare Images.
 
 ### Prompt archive. Model notes. Hosted media.
 
